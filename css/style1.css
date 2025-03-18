@@ -60,3 +60,26 @@ button {
     cursor: pointer;
     font-size: 16px;
 }
+
+button:hover {
+    background-color: #4caf49;
+}
+
+.task-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.task-filters button {
+    background-color: #2196df;
+}
+.task-filters button:hover {
+    background-color: #0b7dda;
+}
+.task-sorts button {
+    background-color: #ff9800;
+}
+.task-sorts button:hover {
+  background-color: #e68a00; 
+}
