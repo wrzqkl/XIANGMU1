@@ -133,6 +133,44 @@
                 console.log(err)
             })
         })
+
+        // Async/Await GET 请求示例------------async/await
+        document.getElementById('asyncFetchButton').addEventListener('click', async function() {
+            try {
+                const res = await axios.get('https://s5.360game.360.cn/to5/mini/v21/category.html');
+                console.log(res,'89898989')
+                if (res.status === 200) {
+                    const users = res.data.data;
+                    const asyncGetResultDiv = document.getElementById('asyncGetResult');
+                    asyncGetResultDiv.innerHTML = '<h2>Users found:</h2>' + users.map(user => `<li>${user.name}</li>`).join('');
+                }   
+            } catch(err) {
+                console.log(err)
+            }
+        })
+
+        // Async/Await PosT 请求示例--------async/await
+        document.getElementById('asyncPostButton').addEventListener('click', async function() {
+            try {
+                const title = document.getElementById('asyncTitleInput').value || '默认标题';
+                const body = document.getElementById('asyncBodyInput').value || '默认内容';
+                const postData = {
+                    title: title,
+                    body: body,
+                    userId: 1
+                };
+                const res = await axios.post('https://jsonplaceholder.typicode.com/posts',postData);
+                const asyncPostResultDiv = document.getElementById('asyncPostResult');
+                asyncPostResultDiv.innerHTML = `<h3>提交成功!</h3>
+                <p><strong>相应状态<strong>: ${res.status}</p>
+                <p><strong>创建的记录id<strong>: ${res.data.id}</p>
+                <p><strong>标题<strong>: ${res.data.title}</p>
+                <p><strong>内答<strong>: ${res.data.body}</p>
+                `;
+            } catch(err) {
+                console.log(err)
+            }
+        })
     </script>
 </body>
-</html>
+</html> 
