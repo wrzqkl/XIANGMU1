@@ -96,8 +96,29 @@
     <!-- 引入Axios库 -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+        // 防抖函数:多次执行，只执行最后一次
+        function debounce(func, delay) {
+            let timer;
+            return function () {
+                clearTimeout(timer);
+                timer =setTimeout(() => {
+                    func.apply(this, arguments);
+                }, delay);
+            }
+        }
+        // 节流函数:限制函数在一定时间内只能执行一次
+        function throttle(func, delay) {
+            let lastTime =0;
+            return function () {
+                const now = new Date().getTime();
+                if (now - lastTime >= delay) {
+                    func.apply(this, arguments);
+                    lastTime = now;
+                }
+            }
+        }
         // GET 请求示例-----------promise
-        document.getElementById('fetchButton').addEventListener('click', function() {
+        document.getElementById('fetchButton').addEventListener('click', debounce(function() {
             axios.get('https://s5.360game.360.cn/to5/mini/v21/category.html').then(function(res){
                 console.log(res.data.data, '11111111111111111111111111111111');
                 const users = res.data.data;
@@ -107,10 +128,10 @@
             .catch(function(err){
                 console.log(err)
             })
-        })
+        }, 1000))
 
         // POST 请求示例-----------promise 
-        document.getElementById('postButton').addEventListener('click', function() {
+        document.getElementById('postButton').addEventListener('click', throttle(function() {
             const title = document.getElementById('titleInput').value || '默认标题';
             const body = document.getElementById('bodyInput').value || '默认內容';
 
@@ -132,10 +153,10 @@
             }).catch(function (err) {
                 console.log(err)
             })
-        })
+        }, 5000))
 
         // Async/Await GET 请求示例------------async/await
-        document.getElementById('asyncFetchButton').addEventListener('click', async function() {
+        document.getElementById('asyncFetchButton').addEventListener('click', debounce(async function() {
             try {
                 const res = await axios.get('https://s5.360game.360.cn/to5/mini/v21/category.html');
                 console.log(res,'89898989')
@@ -147,10 +168,10 @@
             } catch(err) {
                 console.log(err)
             }
-        })
+        }, 1000))
 
         // Async/Await PosT 请求示例--------async/await
-        document.getElementById('asyncPostButton').addEventListener('click', async function() {
+        document.getElementById('asyncPostButton').addEventListener('click', throttle(async function() {
             try {
                 const title = document.getElementById('asyncTitleInput').value || '默认标题';
                 const body = document.getElementById('asyncBodyInput').value || '默认内容';
@@ -170,7 +191,7 @@
             } catch(err) {
                 console.log(err)
             }
-        })
+        }, 5000))
     </script>
 </body>
 </html> 
