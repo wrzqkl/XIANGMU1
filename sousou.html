@@ -457,13 +457,14 @@
 
         // 添加按键松开事件来处理完整的搜索历史
         searchInput.addEventListener('keyup', function (e) {
+            //当用户按下回车键或输入停止一段时间后才添加到历史记录
             if (e.key === 'Enter') {
                 const keyword = this.value.trim();
                 if (keyword) {
                     addToHistory(keyword);
                 }
             }
-        })
+        });
 
         // 当搜索框失去焦点时也添加到历史记录
         searchInput.addEventListener('blur', function () {
